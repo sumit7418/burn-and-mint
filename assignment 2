@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+
+/**
+ * @title MyToken
+ * @dev Basic token contract with mint and burn functionalities.
+ */
+contract MyToken {
+
+    // Public variables to store details about the token
+    string public tokenName = "MyToken";
+    string public tokenAbbrv = "MTK";
+    uint public totalSupply;
+
+    // Mapping to track balances of each address
+    mapping(address => uint) public balances;
+
+    /**
+     * @dev Mint tokens and increase the balance of the specified address.
+     * @param _to The address to mint tokens to.
+     * @param _amount The amount of tokens to mint.
+     */
+    function mint(address _to, uint _amount) public {
+        totalSupply += _amount;
+        balances[_to] += _amount;
+    }
+
+    /**
+     * @dev Burn tokens and decrease the balance of the specified address.
+     * @param _from The address to burn tokens from.
+     * @param _amount The amount of tokens to burn.
+     */
+    function burn(address _from, uint _amount) public {
+        require(balances[_from] >= _amount, "Insufficient balance to burn");
+        totalSupply -= _amount;
+        balances[_from] -= _amount;
+    }
+}
